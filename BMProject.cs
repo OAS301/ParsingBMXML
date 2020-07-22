@@ -43,7 +43,7 @@ namespace ParsingBMXML
         /// Список изделий
         /// </summary>
         [XmlElement("Изделие")]
-        public List<BMProduct> ProductList
+        public List<BMModel> ModelList
         {
             get; set;
         }

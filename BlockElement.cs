@@ -10,7 +10,7 @@ namespace ParsingBMXML
     /// Блок Изделия
     /// </summary>
     [XmlRoot("Блок")]
-    public class BlockElement : Element, IProductElements
+    public class BlockElement : Element, IModelElements
     {
         /// <summary>
         /// Ширина
@@ -40,11 +40,11 @@ namespace ParsingBMXML
         /// Список элементов
         /// </summary>
         [XmlElement("СписокЭлементов")]
-        public ProductElements ProductElements { get; set; }
+        public ModelElements ModelElements { get; set; }
 
-        public ProductElements GetProductElements()
+        public ModelElements GetModelElements()
         {
-            return ProductElements;
+            return ModelElements;
         }
     }
 }

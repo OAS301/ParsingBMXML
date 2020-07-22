@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Xml.Serialization;
+using ParsingBMXML.ObjectElements;
 
 namespace ParsingBMXML
 {
@@ -22,12 +23,18 @@ namespace ParsingBMXML
         /// </summary>
         [XmlElement("Длина")]
         public double Length { get; set; }
-
+        
         /// <summary>
         /// Ширина
         /// </summary>
         [XmlElement("Ширина")]
         public double Width { get; set; }
+
+        /// <summary>
+        /// ОбщаяТолщина
+        /// </summary>
+        [XmlElement("ОбщаяТолщина")]
+        public double Thickness { get; set; }
 
         /// <summary>
         /// ОриентацияТекстуры
@@ -78,6 +85,12 @@ namespace ParsingBMXML
         public Edge4 Edge4 { get; set; }
 
         /// <summary>
+        /// СписокКромокСМЧертеж
+        /// </summary>
+        [XmlElement("СписокКромокСМЧертеж")]
+        public CurvedEdge CurvedEdge { get; set; }
+
+        /// <summary>
         /// Отверстия
         /// </summary>
         [XmlElement("Отверстия")]
@@ -85,6 +98,27 @@ namespace ParsingBMXML
         {
             get; set;
         }
+
+        /// <summary>
+        /// СписокПазов
+        /// </summary>
+        [XmlElement("СписокПазов")]
+        public Grooves Grooves
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// ОблицовкаПласти1
+        /// </summary>
+        [XmlElement("ОблицовкаПласти1")]
+        public FacingPlast1 FacingPlast1 { get; set; }
+
+        /// <summary>
+        /// ОблицовкаПласти1
+        /// </summary>
+        [XmlElement("ОблицовкаПласти2")]
+        public FacingPlast2 FacingPlast2 { get; set; }
 
         /// <summary>
         /// ПользовательскиеСвойства

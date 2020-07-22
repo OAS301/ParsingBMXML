@@ -8,10 +8,10 @@ using ParsingBMXML.BasicClass;
 namespace ParsingBMXML
 {
     /// <summary>
-    /// Изделие проекта
+    /// Модель проекта
     /// </summary>
     [XmlRoot("Изделие")]
-    public class BMProduct : IProductElements
+    public class BMModel : IModelElements
     {
         /// <summary>
         /// Наименование
@@ -50,7 +50,7 @@ namespace ParsingBMXML
         /// СписокЭлементов
         /// </summary>
         [XmlElement("СписокЭлементов")]
-        public ProductElements ProductElementList
+        public ModelElements ModelElementList
         {
             get; set;
         }
@@ -73,9 +73,34 @@ namespace ParsingBMXML
             get; set;
         }
 
-        public ProductElements GetProductElements()
+        public ModelElements GetModelElements()
         {
-            return ProductElementList;
+            return ModelElementList;
         }
+    }
+
+    /// <summary>
+    /// СписокЭлементов модели
+    /// </summary>
+    [XmlRoot("СписокЭлементов")]
+    public class ModelElements
+    {
+        /// <summary>
+        /// Список объектов изделия
+        /// </summary>
+        [XmlElement("Объект")]
+        public List<ObjectElement> ObjectElementList { get; set; }
+
+        /// <summary>
+        /// Список сборок
+        /// </summary>
+        [XmlElement("Сборка")]
+        public List<AssemblyElement> AssemblyElementList { get; set; }
+
+        /// <summary>
+        /// Список блоков
+        /// </summary>
+        [XmlElement("Блок")]
+        public List<BlockElement> BlockElementList { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace ParsingBMXML
     /// Сборка Изделия
     /// </summary>
     [XmlRoot("Сборка")]
-    public class AssemblyElement : Element, IProductElements
+    public class AssemblyElement : Element, IModelElements
     {
         /// <summary>
         /// Цена
@@ -22,14 +22,14 @@ namespace ParsingBMXML
         /// Список элементов
         /// </summary>
         [XmlElement("СписокЭлементов")]
-        public ProductElements ProductElements
+        public ModelElements ModelElements
         {
             get; set;
         }
 
-        public ProductElements GetProductElements()
+        public ModelElements GetModelElements()
         {
-            return ProductElements;
+            return ModelElements;
         }
     }
 }

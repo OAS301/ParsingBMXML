@@ -4,8 +4,8 @@ using System.Text;
 
 namespace ParsingBMXML.BasicClass
 {
-    interface IProductElements
+    public interface IModelElements
     {
-        public ProductElements GetProductElements();
+        ModelElements GetModelElements();
     }
 }

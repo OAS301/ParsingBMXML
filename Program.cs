@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 using System.IO;
 using System.Collections.Generic;
 using ParsingBMXML.BasicClass;
+using System.ComponentModel.DataAnnotations;
 
 namespace ParsingBMXML
 {
@@ -11,19 +12,22 @@ namespace ParsingBMXML
     {
         static void Main(string[] args)
         {
-            try
-            {
+            try {
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(BMPrоject));
-                using (StreamReader sr = new StreamReader(@"C:\Users\VS\Desktop\0000000000002SR72_60002SR72_60.000_Спецификации2.xml"))
-                {
+                using (StreamReader sr = new StreamReader(@"C:\Users\VS\Desktop\0000000000002SR72_60002SR72_60.000_Спецификации2.xml")) {
                     BMPrоject project = (BMPrоject)xmlSerializer.Deserialize(sr);
-                    foreach (BMProduct product in project.ProductList)
-                    {
+                    foreach (BMModel product in project.ModelList) {
+                        var results = new List<ValidationResult>();
+                        var context = new ValidationContext(product);
+                        if (!Validator.TryValidateObject(product, context, results, true)) {
+                            foreach (var error in results) {
+                                  Console.WriteLine(error.ErrorMessage);
+                            }
+                        }
                         List<ObjectElement> listObject = new List<ObjectElement>();
                         listObject.AddRange(GetObjects(product));
                         Console.WriteLine($"Количество деталей: {listObject.Count}");
-                        foreach (var item in listObject)
-                        {
+                        foreach (var item in listObject) {
                             Console.WriteLine($"Позиция детали: {item.Position}");
                         }
                     }
@@ -36,28 +40,20 @@ namespace ParsingBMXML
             Console.ReadLine();
         }
 
-        internal static List<ObjectElement> GetObjects(IProductElements element)
+        internal static List<ObjectElement> GetObjects(IModelElements element)
         {
-            var list = element.GetProductElements();
-            List<ObjectElement> listObject = new List<ObjectElement>();
-            foreach (var item in list.AssemblyElementList)
-            {
-                listObject.AddRange(item.ProductElements.ObjectElementList);
-                if (item.ProductElements.BlockElementList.Any())
-                {
-                    listObject.AddRange(GetObjects(item));
-                }
-            }
-
-            foreach (var item in list.BlockElementList)
-            {
-                listObject.AddRange(item.ProductElements.ObjectElementList);
-                if (item.ProductElements.AssemblyElementList.Any())
-                {
-                    listObject.AddRange(GetObjects(item));
-                }
-            }
-            return listObject;
+            List<ObjectElement> listObject = new List<ObjectElement> ();
+			var list = element.GetModelElements ();
+			listObject.AddRange (list.ObjectElementList);
+			//в сборках
+			foreach (var item in list.AssemblyElementList) {
+				listObject.AddRange (GetObjects (item));
+			}
+			//в блоках
+			foreach (var item in list.BlockElementList) {
+				listObject.AddRange (GetObjects (item));
+			}
+			return listObject;
         }
     }
 }

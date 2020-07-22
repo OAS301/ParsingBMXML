@@ -4,6 +4,7 @@ using System.Text;
 using System.Xml.Serialization;
 using System.Globalization;
 using ParsingBMXML.BasicClass;
+using System.ComponentModel.DataAnnotations;
 
 namespace ParsingBMXML
 {
@@ -11,7 +12,7 @@ namespace ParsingBMXML
     /// Модель проекта
     /// </summary>
     [XmlRoot("Изделие")]
-    public class BMModel : IModelElements
+    public class BMModel : IModelElements, IValidatableObject
     {
         /// <summary>
         /// Наименование
@@ -76,6 +77,19 @@ namespace ParsingBMXML
         public ModelElements GetModelElements()
         {
             return ModelElementList;
+        }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            List<ValidationResult> errors = new List<ValidationResult>();
+
+            if (string.IsNullOrWhiteSpace(this.Name))
+                errors.Add(new ValidationResult("Не указано наименование модели"));
+
+            if (string.IsNullOrWhiteSpace(this.Artikul))
+                errors.Add(new ValidationResult("Не указан артикул модели"));
+
+            return errors;
         }
     }
 

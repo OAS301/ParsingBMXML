@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml.Serialization;
+using System.ComponentModel.DataAnnotations;
 
 namespace ParsingBMXML
 {
@@ -10,7 +11,7 @@ namespace ParsingBMXML
     /// Проект
     /// </summary>
     [XmlRoot("Проект")]
-    public class BMPrоject
+    public class BMPrоject 
     {
         /// <summary>
         /// Наименование

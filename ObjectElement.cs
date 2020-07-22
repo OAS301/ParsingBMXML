@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml.Serialization;
 using ParsingBMXML.ObjectElements;
+using System.ComponentModel.DataAnnotations;
 
 namespace ParsingBMXML
 {
@@ -127,6 +128,19 @@ namespace ParsingBMXML
         public UserProperties UserProperties
         {
             get; set;
+        }
+
+        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            List<ValidationResult> errors = new List<ValidationResult>();
+
+            if (this.BasicMaterial == null)
+                errors.Add(new ValidationResult(string.Format("Не указан основной материал объекта {0}", this.Artikul)));
+
+            if (string.IsNullOrEmpty(this.Name))
+                errors.Add(new ValidationResult(string.Format("Не указано наименование объекта {0}", this.Artikul)));
+
+            return errors;
         }
     }
 }

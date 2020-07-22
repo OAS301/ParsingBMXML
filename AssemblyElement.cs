@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml.Serialization;
+using System.ComponentModel.DataAnnotations;
 
 namespace ParsingBMXML
 {
@@ -30,6 +31,16 @@ namespace ParsingBMXML
         public ModelElements GetModelElements()
         {
             return ModelElements;
+        }
+
+        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            List<ValidationResult> errors = new List<ValidationResult>();
+
+            if (this.ModelElements == null)
+                errors.Add(new ValidationResult(string.Format("У сборки {0} отсутствует список элементов", this.Name)));
+
+            return errors;
         }
     }
 }

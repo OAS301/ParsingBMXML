@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Xml.Serialization;
+using System.ComponentModel.DataAnnotations;
 
 namespace ParsingBMXML
 {
-    public abstract class BMMaterial
+    public abstract class BMMaterial : IValidatableObject
     {
         /// <summary>
         /// ID
@@ -54,6 +55,22 @@ namespace ParsingBMXML
         /// </summary>
         [XmlElement("Коэффициент")]
         public double Coefficient { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            List<ValidationResult> errors = new List<ValidationResult>();
+
+            if (string.IsNullOrWhiteSpace(this.Name))
+                errors.Add(new ValidationResult("Не указано наименование материала"));
+
+            if (string.IsNullOrWhiteSpace(this.Artikul))
+                errors.Add(new ValidationResult("Не указан артикул материала"));
+
+            if (this.Id < 0)
+                errors.Add(new ValidationResult("ID материала должен быть больше 0"));
+
+            return errors;
+        }
     }
 
     /// <summary>

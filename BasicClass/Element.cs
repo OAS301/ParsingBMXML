@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Xml.Serialization;
+using System.ComponentModel.DataAnnotations;
 
 namespace ParsingBMXML
 {
-    public abstract class Element
+    public abstract class Element : IValidatableObject
     {
         /// <summary>
         /// Наименование
@@ -30,5 +31,7 @@ namespace ParsingBMXML
         /// </summary>
         [XmlElement("Позиция")]
         public string Position { get; set; }
+
+        public abstract IEnumerable<ValidationResult> Validate(ValidationContext validationContext);
     }
 }
